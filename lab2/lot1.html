@@ -11,41 +11,57 @@
 <body>
   <h1>Lot nr 1</h1>
   
-  <h2>Informacje o locie</h2>
-  <div class="info">
-    <b>Z: </b><a href="https://pl.wikipedia.org/wiki/Warszawa">Warszawa</a>
-    <div class="pogoda">
-      <span class="pogoda-header">Pogoda:</span> Słonecznie
-    </div>
-    <img id="warsaw" src="warsaw.jpg" alt="Warszawa">
-  </div>
-  
-  <div class="info">
-    <b>Do: </b><a href="https://pl.wikipedia.org/wiki/Berlin">Berlin</a>
-    <div class="pogoda">
-      <span class="pogoda-header">Pogoda:</span> Deszczowo
-    </div>
-    <img id="berlin" src="berlin.jpg" alt="Berlin">
-  </div>
+  <article>
+    <h2>Informacje o locie</h2>
+    <section id="main-info" class="info-box">
+      <div id="lot-z">
+        <h3>Z: <a href="https://pl.wikipedia.org/wiki/Warszawa">Warszawa</a></h3>
+        <img id="warsaw" src="warsaw.jpg" alt="Warszawa">
+        <div class="pogoda">
+          <span class="pogoda-header">Pogoda:</span> Słonecznie
+        </div>
+      </div>
+      
+      <div id="lot-do">
+        <h3>Do: <a href="https://pl.wikipedia.org/wiki/Berlin">Berlin</a></h3>
+        <img id="berlin" src="berlin.jpg" alt="Berlin">
+        <div class="pogoda">
+          <span class="pogoda-header">Pogoda:</span> Deszczowo
+        </div>
+      </div>
+    </section>
+  </article>
 
-  <div class="info">
-    <ul class="info-list">
-      <li><b>Czas lotu: </b> 1h</li>
-      <li><b>Samolot: </b>Boeing 747</li>
-      <li><b>Liczba miejsc: </b> 200</li>
-    </ul>
-    <img id="plane" src="plane.jpeg" alt="Boeing 747">
-  </div>
+  <article>
+    <h2>Informacje o samolocie</h2>
+    <section id="plane-info" class="info-box">
+      <div id="plane-box">
+        <ul class="info-list">
+          <li><b>Czas lotu: </b> 1h</li>
+          <li><b>Samolot: </b>Boeing 747</li>
+          <li><b>Liczba miejsc: </b> 200</li>
+        </ul>
+        <img id="plane" src="plane.jpeg" alt="Boeing 747">
+      </div>
+    </section>
+  </article>
 
-  <div class="info">
-    <h2>Lista pasażerów:</h2>
-    <ol>
-      <li>Jan Kowalski</li>
-      <li>Michał Jadwiszczak</li>
-      <li>Jan Nowak</li>
-    </ol>
-  </div>
+  <article>
+    <h2>Informacje o pasażerach</h2>
+    <section id="pass-info" class="info-box">
+      <div id="pass-box">
+        <h3>Lista pasażerów:</h2>
+        <ol>
+          <li>Jan Kowalski</li>
+          <li>Michał Jadwiszczak</li>
+          <li>Jan Nowak</li>
+        </ol>
+      </div>
+    </section>
+  </article>
 
-  <a href="index.html">Powrót do listy lotów</a>
+  <section id="back">
+    <a href="index.html">Powrót do listy lotów</a>
+  </section>
 </body>
 </html>

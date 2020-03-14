@@ -61,6 +61,8 @@ img {
   display: block;
   width: 300px;
   height: 200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .pogoda {
@@ -71,16 +73,61 @@ img {
   font-weight: bold;
 }
 
-li, ol {
-  text-align: left;
+.info-box {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
-.info {
-  text-align: left;
-  margin-bottom: 2%;
+#main-info {
+  padding-left: 2%;
+  padding-right: 2%;
+  background-color: rgb(248, 211, 108);
+  display: flex;
+  flex-wrap: wrap;
+  border: 3px solid rgb(224, 111, 36);
 }
 
-.info-list {
-  list-style-type: none;
-  padding: 0;
+#lot-z, #lot-do {
+  margin-left: 10%;
+  margin-right: 10%;
+  width: 30%;
+  background-color: rgb(224, 111, 36);
+  padding-bottom: 15px;
+}
+
+#plane-info {
+  background-color: rgb(91, 190, 91);
+  border: 3px solid green;
+}
+
+#plane-box {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 5px;
+  padding-bottom: 15px;
+  width: 40%;
+  background-color: green;
+}
+
+#pass-info {
+  background-color: rgb(118, 183, 236);
+  border: 3px solid blue;
+}
+
+#pass-box {
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+  background-color: rgb(68, 68, 228);
+}
+
+#back {
+  margin-left: auto;
+  margin-right: auto;
+  width: 15%;
+  background-color: cornflowerblue;
+  border: 3px solid blue;
 }
