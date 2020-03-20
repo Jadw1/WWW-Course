@@ -128,6 +128,47 @@
     </section>
   </div>
   
+  <div class="form-container">
+    <form method="POST">
+      <ul class="form-list">
+        <li class="list-label"><label>Imię i Nazwisko</label></li>
+        <li>
+          <input type="text" id="name" placeholder="Imię">
+          <input type="text" id="surname" placeholder="Nazwisko">
+        </li>
+        <li class="list-label"><label for="from">Z</label></li>
+        <li>
+          <select id="from">
+            <option value="warszawa">Warszawa</option>
+            <option value="lodz">Łódź</option>
+            <option value="katowice">Katowice</option>
+            <option value="gdansk">Gdańsk</option>
+            <option value="barlin">Berlin</option>
+          </select>
+        </li>
+        <li class="list-label"><label for="to">Do</label></li>
+        <li>
+          <select id="to">
+            <option value="warszawa">Warszawa</option>
+            <option value="lodz">Łódź</option>
+            <option value="katowice">Katowice</option>
+            <option value="gdansk">Gdańsk</option>
+            <option value="barlin">Berlin</option>
+          </select>
+        </li>
+        <li class="list-label"><label>Kiedy</label></li>
+        <li>
+          <input type="date" id="when">
+          <input type="time" id="when-time">
+        </li>
+        <li class="list-label">
+          <input type="submit" value="Wyślij">
+          <input type="reset" value="Wyczyść">
+        </li>
+      </ul>
+    </form>
+
+  </div>
   <footer>
     Michał Jadwiszczak
   </footer>
