@@ -53,10 +53,6 @@ table {
   z-index: 1;
 }
 
-#lista {
-  position: relative;
-}
-
 img {
   display: block;
   width: 300px;

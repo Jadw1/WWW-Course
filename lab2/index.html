@@ -9,21 +9,27 @@
   <script src='main.js'></script>
 </head>
 <body>
-  <h1>Lista lotów</h1>
+  <h1>Linie lotnicze MIM</h1>
   <img id="logo" src="logo.jpg" alt="logo firmy">
 
-  <p id="pierwszy">
-    Lista lotów linii lotniczych MIM.
-  </p>
-  <p id="drugi">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim magna eget nisl gravida, at pretium justo pulvinar. Morbi euismod enim nec accumsan semper.
-  </p>
+  <nav>
+    <ul>
+      <li><a href="#pierwszy">Lista lotów</a></li>
+      <li><a href="#opoznienia">Opóźnienia</a></li>
+      <li><a href="lot1.html">Cennik</a></li>
+      <li><a href="lot1.html">Przed lotem</a></li>
+      <li><a href="lot1.html">Informacje dla pasażerów</a></li>
+      <li><a href="index.html">Nasza flota</a></li>
+      <li><a href="index.html">Nasze lotniska</a></li>
+      <li><a href="index.html">Kontakt</a></li>
+    </ul>
+  </nav>
 
-  <div id="lista">
-    <p id="trzeci">
-      Ale super lot!
-    </p>
-
+  <section>
+    <h2 id="pierwszy">
+      Lista lotów linii lotniczych MIM.
+    </h2>
+  
     <table>
       <tr>
         <th>Nr</th>
@@ -47,7 +53,70 @@
         <td>19:42</td>
       </tr>
     </table>
-  </div>
+  </section>
+
+  <section>
+    <h2 id="opoznienia">Opóźnienia</h2>
+
+    <table>
+      <tr>
+        <th>Z</th>
+        <th>Do</th>
+        <th>Kiedy</th>
+        <th>Status</th>
+      </tr>
+      <tr>
+        <td>Warszawa</td>
+        <td>Berlin</td>
+        <td>20-03-2020 12:00</td>
+        <td>opóźniony 1h</td>
+      </tr>
+      <tr>
+        <td>Warszawa</td>
+        <td>Gdańsk</td>
+        <td>20-03-2020 14:20</td>
+        <td>aktualny</td>
+      </tr>
+      <tr>
+        <td>Łódź</td>
+        <td>Warszawa</td>
+        <td>20-03-2020 14:30</td>
+        <td>odwołany</td>
+      </tr>
+      <tr>
+        <td>Łódź</td>
+        <td>Berlin</td>
+        <td>20-03-2020 16:00</td>
+        <td>opóźniony 3h</td>
+      </tr>
+      <tr>
+        <td>Berlin</td>
+        <td>Gdańsk</td>
+        <td>20-03-2020 16:23</td>
+        <td>opóźniony 1h</td>
+      </tr>
+      <tr>
+        <td>Gdańsk</td>
+        <td>Łódź</td>
+        <td>20-03-2020 17:08</td>
+        <td>aktualny</td>
+      </tr>
+      <tr>
+        <td>Warszawa</td>
+        <td>Berlin</td>
+        <td>20-03-2020 20:26</td>
+        <td>odwołany</td>
+      </tr>
+      <tr>
+        <td>Katowice</td>
+        <td>Warszawa</td>
+        <td>20-03-2020 21:17</td>
+        <td>opóźniony 4h</td>
+      </tr>
+    </table>
+  </section>
+  
+
 
   <footer>
     Michał Jadwiszczak
