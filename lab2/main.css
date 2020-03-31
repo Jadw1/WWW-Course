@@ -151,14 +151,6 @@ nav {
   justify-content: space-between;
 }
 
-#flex-loty {
-  flex-grow: 2;
-}
-
-#flex-opoznienia {
-  flex-flow: 2;
-}
-
 .form-list {
   list-style: none;
   padding-left: 5px;
@@ -189,4 +181,44 @@ input[type=reset] {
 .form-container {
   display: flex;
   flex-direction: row-reverse;
+}
+
+.table-container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  flex-grow: 2;
+}
+
+@media screen and (max-width: 500px){
+	.flex-container, .table-container {
+		flex-direction: column;
+  }
+  
+  .info-box {
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-bottom: 1px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
+
+  img {
+    display: none;
+  }
+
+  .pogoda {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 900px) and (min-width: 500px) {
+  nav {
+		order: -1;
+		flex: 1 0 100%;
+	}
+
+	.flex-container {
+		flex-wrap: wrap;
+	}
 }
