@@ -28,7 +28,7 @@ table {
   margin-right: auto;
 }
 
-h1, h2 {
+h1, h2, h3 {
   text-align: center;
 }
 
@@ -104,7 +104,7 @@ img {
   margin-left: auto;
   margin-right: auto;
   width: 30%;
-  background-color: rgb(68, 68, 228);
+  background-color: rgb(0, 204, 255);
 }
 
 #back {
@@ -221,4 +221,23 @@ input[type=reset] {
 	.flex-container {
 		flex-wrap: wrap;
 	}
+}
+
+.passengers li {
+  margin: auto;
+  text-align: center;
+}
+
+.passengers li:nth-child(even) {
+  background-color: rgb(68, 78, 218);
+}
+
+.popup{
+	display: none;
+	position: absolute;
+}
+
+.passengers li:hover .popup {
+  display: block;
+  background-color: wheat;
 }
