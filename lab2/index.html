@@ -9,10 +9,12 @@
   <script src='main.js'></script>
 </head>
 <body>
-  <h1>Linie lotnicze MIM</h1>
-  <img id="logo" src="logo.jpg" alt="logo firmy">
-
-  <div class="flex-container">
+  <div class="grid-container">
+    <section id="main-header">
+      <h1>Linie lotnicze MIM</h1>
+      <img id="logo" src="logo.jpg" alt="logo firmy">
+    </section>
+    
     <nav>
       <ul class="nav-list">
         <li><a class="nav-link" href="#loty">Lista lotów</a></li>
@@ -36,8 +38,8 @@
       </ul>
     </nav>
   
-    <div class="table-container">
-      <section id="flex-loty">
+    <!-- <div class="table-container"> -->
+    <section id="loty">
         <h2 id="loty">
           Lista lotów linii lotniczych MIM
         </h2>
@@ -65,9 +67,9 @@
             <td>19:42</td>
           </tr>
         </table>
-      </section>
+    </section>
       
-      <section id="flex-opoznienia">
+    <section id="opoznienia">
         <h2 id="opoznienia">Opóźnienia</h2>
     
         <table>
@@ -126,53 +128,56 @@
             <td>opóźniony 4h</td>
           </tr>
         </table>
-      </section>
-    </div>
-  </div>
-  
-  <div class="form-container">
-    <form method="POST">
-      <ul class="form-list">
-        <li class="list-label"><label>Imię i Nazwisko</label></li>
-        <li>
-          <input type="text" id="name" placeholder="Imię">
-          <input type="text" id="surname" placeholder="Nazwisko">
-        </li>
-        <li class="list-label"><label for="from">Z</label></li>
-        <li>
-          <select id="from">
-            <option value="warszawa">Warszawa</option>
-            <option value="lodz">Łódź</option>
-            <option value="katowice">Katowice</option>
-            <option value="gdansk">Gdańsk</option>
-            <option value="barlin">Berlin</option>
-          </select>
-        </li>
-        <li class="list-label"><label for="to">Do</label></li>
-        <li>
-          <select id="to">
-            <option value="warszawa">Warszawa</option>
-            <option value="lodz">Łódź</option>
-            <option value="katowice">Katowice</option>
-            <option value="gdansk">Gdańsk</option>
-            <option value="barlin">Berlin</option>
-          </select>
-        </li>
-        <li class="list-label"><label>Kiedy</label></li>
-        <li>
-          <input type="date" id="when">
-          <input type="time" id="when-time">
-        </li>
-        <li class="list-label">
-          <input type="submit" value="Wyślij">
-          <input type="reset" value="Wyczyść">
-        </li>
-      </ul>
-    </form>
-  </div>
 
-  <footer>
-    Michał Jadwiszczak
-  </footer>
+        <div class="form-container">
+        <form method="POST">
+          <ul class="form-list">
+            <li class="list-label"><label>Imię i Nazwisko</label></li>
+            <li>
+              <input type="text" id="name" placeholder="Imię">
+              <input type="text" id="surname" placeholder="Nazwisko">
+            </li>
+            <li class="list-label"><label for="from">Z</label></li>
+            <li>
+              <select id="from">
+                <option value="warszawa">Warszawa</option>
+                <option value="lodz">Łódź</option>
+                <option value="katowice">Katowice</option>
+                <option value="gdansk">Gdańsk</option>
+                <option value="barlin">Berlin</option>
+              </select>
+            </li>
+            <li class="list-label"><label for="to">Do</label></li>
+            <li>
+              <select id="to">
+                <option value="warszawa">Warszawa</option>
+                <option value="lodz">Łódź</option>
+                <option value="katowice">Katowice</option>
+                <option value="gdansk">Gdańsk</option>
+                <option value="barlin">Berlin</option>
+              </select>
+            </li>
+            <li class="list-label"><label>Kiedy</label></li>
+            <li>
+              <input type="date" id="when">
+              <input type="time" id="when-time">
+            </li>
+            <li class="list-label">
+              <input type="submit" value="Wyślij">
+              <input type="reset" value="Wyczyść">
+            </li>
+          </ul>
+        </form>
+        </div>
+    </section>
+    <!-- </div> -->
+  
+  
+
+    <footer>
+      Michał Jadwiszczak
+    </footer>
+
+</div>
 </body>
 </html>
