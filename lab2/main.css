@@ -234,6 +234,22 @@ input[type=reset] {
   grid-area: header;
 }
 
+.confirmation {
+  position: fixed;
+  width: 97%;
+  height: 97%;
+  background-color: rgba(8, 248, 28, 0.5);
+  margin: 1.5%;
+  padding-top: 20%;
+  /* padding-left: 10%; */
+  /* padding-right: 10%; */
+  text-align: center;
+}
+
+.confirmation h1 {
+  font-size: 50px;
+}
+
 @media screen and (max-width: 500px){
   .flex-container, .table-container {
    flex-direction: column;
