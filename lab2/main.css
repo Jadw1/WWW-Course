@@ -128,11 +128,16 @@ nav {
   padding-left: 10px;
 }
 
-.nav-link:link, .nav-link:visited {
+.nav-list a {
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.nav-list a:link, .nav-list a:visited {
   color: rgb(45, 192, 45);
 }
 
-.nav-link:hover, .nav-link:active {
+.nav-list a:hover, .nav-list a:active {
   color: green;
 }
 
@@ -214,12 +219,13 @@ input[type=reset] {
 
 .grid-container {
   display: grid;
-  grid-template-columns: 200px 15px 3fr 15px 1fr;
+  grid-template-columns: 200px 3fr 1fr;
+  grid-column-gap: 15px;
   grid-template-rows: auto;
   grid-template-areas: 
-  "header header header header header"
-  "menu . main . right"
-  "footer footer footer footer footer";
+  "header header header"
+  "menu main right"
+  "footer footer footer";
 }
 
 #loty {
@@ -236,10 +242,9 @@ input[type=reset] {
 
 .confirmation {
   position: fixed;
-  width: 97%;
-  height: 97%;
+  width: 100%;
+  height: 100%;
   background-color: rgba(8, 248, 28, 0.5);
-  margin: 1.5%;
   padding-top: 20%;
   /* padding-left: 10%; */
   /* padding-right: 10%; */
