@@ -9,12 +9,11 @@
   <script src='main.js'></script>
 </head>
 <body>
-
   <section class="confirmation">
     <h1>Rezerwacja udana!</h1>
     <a href="index.html">Powrót do listy lotów</a>
   </section>
-
+  
   <div class="grid-container">
     <section id="main-header">
       <h1>Linie lotnicze MIM</h1>
@@ -23,24 +22,24 @@
     
     <nav>
       <ul class="nav-list">
-        <li><a class="nav-link" href="#loty">Lista lotów</a></li>
-        <li><a class="nav-link" href="#opoznienia">Opóźnienia</a></li>
-        <li><a class="nav-link" href="lot1.html">Cennik</a></li>
+        <li><a href="#loty">Lista lotów</a></li>
+        <li><a href="#opoznienia">Opóźnienia</a></li>
+        <li><a href="lot1.html">Cennik</a></li>
         <li>
           Dla pasażerów
           <ul class="nav-list">
-            <li><a class="nav-link" href="lot1.html">Przed lotem</a></li>
-            <li><a class="nav-link" href="lot1.html">Informacje dla pasażerów</a></li>
+            <li><a href="lot1.html">Przed lotem</a></li>
+            <li><a href="lot1.html">Informacje dla pasażerów</a></li>
           </ul>
         </li>
         <li>
           O nas
           <ul class="nav-list">
-            <li><a class="nav-link" href="index.html">Nasza flota</a></li>
-            <li><a class="nav-link" href="index.html">Nasze lotniska</a></li>
+            <li><a href="index.html">Nasza flota</a></li>
+            <li><a href="index.html">Nasze lotniska</a></li>
           </ul>
         </li>
-        <li><a class="nav-link" href="index.html">Kontakt</a></li>
+        <li><a href="index.html">Kontakt</a></li>
       </ul>
     </nav>
   
@@ -135,56 +134,56 @@
           </tr>
         </table>
 
-        <div class="form-container">
-        <form method="POST">
-          <ul class="form-list">
-            <li class="list-label"><label>Imię i Nazwisko</label></li>
-            <li>
-              <input type="text" id="name" placeholder="Imię">
-              <input type="text" id="surname" placeholder="Nazwisko">
-            </li>
-            <li class="list-label"><label for="from">Z</label></li>
-            <li>
-              <select id="from">
-                <option value="warszawa">Warszawa</option>
-                <option value="lodz">Łódź</option>
-                <option value="katowice">Katowice</option>
-                <option value="gdansk">Gdańsk</option>
-                <option value="barlin">Berlin</option>
-              </select>
-            </li>
-            <li class="list-label"><label for="to">Do</label></li>
-            <li>
-              <select id="to">
-                <option value="warszawa">Warszawa</option>
-                <option value="lodz">Łódź</option>
-                <option value="katowice">Katowice</option>
-                <option value="gdansk">Gdańsk</option>
-                <option value="barlin">Berlin</option>
-              </select>
-            </li>
-            <li class="list-label"><label>Kiedy</label></li>
-            <li>
-              <input type="date" id="when">
-              <input type="time" id="when-time">
-            </li>
-            <li class="list-label">
-              <input type="submit" value="Wyślij">
-              <input type="reset" value="Wyczyść">
-            </li>
-          </ul>
-        </form>
-        </div>
     </section>
+
+    <div class="form-container">
+          <form method="POST" action="copy.html">
+            <ul class="form-list">
+              <li class="list-label"><label>Imię i Nazwisko</label></li>
+              <li>
+                <input type="text" id="name" placeholder="Imię">
+                <input type="text" id="surname" placeholder="Nazwisko">
+              </li>
+              <li class="list-label"><label for="from">Z</label></li>
+              <li>
+                <select id="from">
+                  <option value="warszawa">Warszawa</option>
+                  <option value="lodz">Łódź</option>
+                  <option value="katowice">Katowice</option>
+                  <option value="gdansk">Gdańsk</option>
+                  <option value="barlin">Berlin</option>
+                </select>
+              </li>
+              <li class="list-label"><label for="to">Do</label></li>
+              <li>
+                <select id="to">
+                  <option value="warszawa">Warszawa</option>
+                  <option value="lodz">Łódź</option>
+                  <option value="katowice">Katowice</option>
+                  <option value="gdansk">Gdańsk</option>
+                  <option value="barlin">Berlin</option>
+                </select>
+              </li>
+              <li class="list-label"><label>Kiedy</label></li>
+              <li>
+                <input type="date" id="when">
+                <input type="time" id="when-time">
+              </li>
+              <li class="list-label">
+                <input type="submit" value="Wyślij">
+                <input type="reset" value="Wyczyść">
+              </li>
+            </ul>
+          </form>
+    </div>
     <!-- </div> -->
+  
+  
 
     <footer>
       Michał Jadwiszczak
     </footer>
 
 </div>
-
-
-
 </body>
 </html>

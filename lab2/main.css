@@ -188,7 +188,7 @@ input[type=reset] {
 .form-container {
   /* display: flex; */
   /* flex-direction: row-reverse; */
-  grid-area: right;
+  grid-area: rightBottom;
 }
 
 /* .table-container {
@@ -225,6 +225,7 @@ input[type=reset] {
   grid-template-areas: 
   "header header header"
   "menu main right"
+  "menu main rightBottom"
   "footer footer footer";
 }
 
@@ -311,4 +312,11 @@ input[type=reset] {
    "main right"
    "footer footer";
  }
+}
+
+@media screen and (min-width: 900){
+	#opoznienia table{
+		word-break: break-all;
+		table-layout: fixed;
+	}
 }
