@@ -256,6 +256,22 @@ input[type=reset] {
   font-size: 50px;
 }
 
+body {
+  margin: 0 0 0 0;
+}
+
+@media screen and (max-width: 1500px) and (min-width: 1250px) {
+  #opoznienia_tabelka th, #opoznienia_tabelka td {
+    padding: 0 0 0 0;
+  }
+
+  #loty_tabelka th, #loty_tabelka td {
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+  
+}
+
 @media screen and (max-width: 500px){
   .flex-container, .table-container {
    flex-direction: column;
@@ -285,15 +301,12 @@ input[type=reset] {
    "menu"
    "main"
    "right"
+   "rightBottom"
    "footer";
- }
-
- h2 {
-   background-color: blue;
  }
 }
 
-@media screen and (max-width: 900px) and (min-width: 500px) {
+@media screen and (max-width: 1250px) and (min-width: 500px) {
  /* nav {
    order: -1;
    flex: 1 0 100%;
@@ -302,7 +315,7 @@ input[type=reset] {
  .flex-container {
    flex-wrap: wrap;
  }
- 
+
  .grid-container {
    grid-template-columns: auto;
    grid-template-rows: auto;
@@ -310,13 +323,14 @@ input[type=reset] {
    "header header"
    "menu menu"
    "main right"
+   "main rightBottom"
    "footer footer";
  }
 }
 
-@media screen and (min-width: 900){
+/* @media screen and (min-width: 900){
 	#opoznienia table{
 		word-break: break-all;
 		table-layout: fixed;
 	}
-}
+} */
