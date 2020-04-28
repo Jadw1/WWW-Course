@@ -67,7 +67,7 @@ function setOverlayInfo() {
     var date = document.getElementById("when").value;
     var time = document.getElementById("when-time").value;
     var info = document.getElementById("info");
-    info.innerHTML = "Imi\u0119: " + name + "<br>Nazwisko: " + surname + "<br>From: " + from + "<br>To: " + to + "<br>Kiedy: " + date + "<br>O kt\u00F3rej: " + time;
+    info.innerHTML = "Imi\u0119: " + name + "<br>Nazwisko: " + surname + "<br>Z: " + from + "<br>Do: " + to + "<br>Kiedy: " + date + "<br>O kt\u00F3rej: " + time;
 }
 function setOverlayVisibility(visible) {
     var displayStyle = (visible) ? "block" : "none";

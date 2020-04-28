@@ -82,7 +82,7 @@ function setOverlayInfo() {
     const time = (document.getElementById("when-time") as HTMLInputElement).value;
 
     let info = document.getElementById("info") as HTMLDivElement;
-    info.innerHTML = `Imię: ${name}<br>Nazwisko: ${surname}<br>From: ${from}<br>To: ${to}<br>Kiedy: ${date}<br>O której: ${time}`;
+    info.innerHTML = `Imię: ${name}<br>Nazwisko: ${surname}<br>Z: ${from}<br>Do: ${to}<br>Kiedy: ${date}<br>O której: ${time}`;
 }
 
 function setOverlayVisibility(visible: boolean) {
