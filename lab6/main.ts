@@ -41,6 +41,7 @@ function validateDateField(field: HTMLInputElement): boolean {
 }
 
 function validateTimeField(field: HTMLInputElement): boolean {
+    return true;
     const val = field.valueAsNumber;
     return val != null && ((val - getCurrentTime()) > 0);
 }

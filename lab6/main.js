@@ -32,6 +32,7 @@ function validateDateField(field) {
     return val != null && ((val - Date.now()) >= 0);
 }
 function validateTimeField(field) {
+    return true;
     var val = field.valueAsNumber;
     return val != null && ((val - getCurrentTime()) > 0);
 }
