@@ -17,24 +17,12 @@ function colorChanger(el) {
 }
 colorChanger(submitButton);
 // ==== FORM VALIDATION ====
-function getCurrentTime() {
-    var now = new Date(Date.now());
-    var time = 0;
-    time += now.getHours() * 3600000;
-    time += now.getMinutes() * 60000;
-    return time;
-}
 function validateInputField(field) {
     return field.value.trim().length > 0;
 }
 function validateDateField(field) {
     var val = field.valueAsNumber;
     return val != null && ((val - Date.now()) >= 0);
-}
-function validateTimeField(field) {
-    return true;
-    var val = field.valueAsNumber;
-    return val != null && ((val - getCurrentTime()) > 0);
 }
 function validateDestinations(from, to) {
     var fromStr = from.value;
@@ -47,9 +35,8 @@ function validateForm() {
     var from = document.getElementById("from");
     var to = document.getElementById("to");
     var date = document.getElementById("when");
-    var time = document.getElementById("when-time");
     return validateInputField(name) && validateInputField(surname) &&
-        validateDestinations(from, to) && validateDateField(date) && validateTimeField(time);
+        validateDestinations(from, to) && validateDateField(date);
 }
 function setButtonStatus() {
     if (validateForm()) {
@@ -66,9 +53,8 @@ function setOverlayInfo() {
     var from = document.getElementById("from").value;
     var to = document.getElementById("to").value;
     var date = document.getElementById("when").value;
-    var time = document.getElementById("when-time").value;
     var info = document.getElementById("info");
-    info.innerHTML = "Imi\u0119: " + name + "<br>Nazwisko: " + surname + "<br>Z: " + from + "<br>Do: " + to + "<br>Kiedy: " + date + "<br>O kt\u00F3rej: " + time;
+    info.innerHTML = "Imi\u0119: " + name + "<br>Nazwisko: " + surname + "<br>Z: " + from + "<br>Do: " + to + "<br>Kiedy: " + date;
 }
 function setOverlayVisibility(visible) {
     var displayStyle = (visible) ? "block" : "none";

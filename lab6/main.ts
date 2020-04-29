@@ -22,15 +22,6 @@ function colorChanger(el: HTMLElement) {
 colorChanger(submitButton);
 
 // ==== FORM VALIDATION ====
-function getCurrentTime(): number {
-    const now = new Date(Date.now());
-    let time = 0;
-
-    time += now.getHours() * 3600000;
-    time += now.getMinutes() * 60000;
-    return time;
-}
-
 function validateInputField(field: HTMLInputElement): boolean {
     return field.value.trim().length > 0;
 }
@@ -38,12 +29,6 @@ function validateInputField(field: HTMLInputElement): boolean {
 function validateDateField(field: HTMLInputElement): boolean {
     const val = field.valueAsNumber;
     return val != null && ((val - Date.now()) >= 0);
-}
-
-function validateTimeField(field: HTMLInputElement): boolean {
-    return true;
-    const val = field.valueAsNumber;
-    return val != null && ((val - getCurrentTime()) > 0);
 }
 
 function validateDestinations(from: HTMLInputElement, to: HTMLInputElement): boolean {
@@ -58,10 +43,9 @@ function validateForm(): boolean {
     const from = document.getElementById("from") as HTMLInputElement;
     const to = document.getElementById("to") as HTMLInputElement;
     const date = document.getElementById("when") as HTMLInputElement;
-    const time = document.getElementById("when-time") as HTMLInputElement;
 
     return validateInputField(name) && validateInputField(surname) &&
-        validateDestinations(from, to) && validateDateField(date) && validateTimeField(time);
+        validateDestinations(from, to) && validateDateField(date);
 }
 
 function setButtonStatus() {
@@ -80,10 +64,9 @@ function setOverlayInfo() {
     const from = (document.getElementById("from") as HTMLInputElement).value;
     const to = (document.getElementById("to") as HTMLInputElement).value;
     const date = (document.getElementById("when") as HTMLInputElement).value;
-    const time = (document.getElementById("when-time") as HTMLInputElement).value;
 
     let info = document.getElementById("info") as HTMLDivElement;
-    info.innerHTML = `Imię: ${name}<br>Nazwisko: ${surname}<br>Z: ${from}<br>Do: ${to}<br>Kiedy: ${date}<br>O której: ${time}`;
+    info.innerHTML = `Imię: ${name}<br>Nazwisko: ${surname}<br>Z: ${from}<br>Do: ${to}<br>Kiedy: ${date}`;
 }
 
 function setOverlayVisibility(visible: boolean) {
