@@ -30,16 +30,29 @@ most_expensive.forEach(m => {
 });
 
 app.set('view engine', 'pug');
+app.use(express.urlencoded({
+    extended: true
+})); 
+
 app.get('/', function (req, res) {
     res.render('index', { title: 'Meme market', message: 'Hello there!', storage: storage })
 });
 
 app.get('/meme/:memeId(\\d+)', function (req, res, next) {
-    let meme = get_meme(parseInt(req.params.memeId));
+    const meme = storage.getMeme(parseInt(req.params.memeId));
     if(!meme)
         next();
-    res.render('meme', { meme: meme })
+    res.render('meme', { title: 'Meme market', meme: meme });
  });
+
+ app.post('/meme/:memeId(\\d+)', function (req, res, next) {
+    const meme = storage.getMeme(parseInt(req.params.memeId));
+    const price = req.body.price;
+    if(!meme)
+        next();
+    meme.setPrice(price);
+    res.render('meme', { title: 'Meme market', meme: meme });
+ })
 
  app.use((req, res) => {
      res.status(404);

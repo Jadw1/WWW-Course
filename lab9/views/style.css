@@ -1,0 +1,21 @@
+.meme {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 50px;
+}
+
+.meme-title {
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.meme-title:link,
+.meme-title:visited {
+    color: green;
+}
+
+.meme-title:hover,
+.meme-title:active {
+    color: chartreuse;
+}

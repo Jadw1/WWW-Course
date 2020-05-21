@@ -1,0 +1,21 @@
+html
+    head
+        title= title
+    style
+        include style.css
+    body
+        h1= meme.name
+        p Actual price: #{meme.price}
+        img(src=meme.url)
+
+        table
+            tr
+                th="Cena"
+            each price in meme.pricesHistory.reverse()
+                tr
+                    td=price
+
+        form(method="POST")
+            label(for="price")="Nowa cena:"
+            input(type="number" min="0" name="price")
+            button(type="submit")="Ustaw"

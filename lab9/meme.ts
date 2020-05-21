@@ -10,6 +10,7 @@ export class Meme {
         this.name = name;
         this.price = price;
         this.url = url;
+        this.pricesHistory = [];
     }
 
     setPrice(price: number) {
@@ -42,12 +43,13 @@ export class MemesStorage {
     }
 
     getMeme(id: number): Meme {
+        let result: Meme = null;
         this.memes.forEach(meme => {
             if(meme.id === id) {
-                return meme;
+                result = meme;
             }
         });
 
-        return null;
+        return result;
     }
 }

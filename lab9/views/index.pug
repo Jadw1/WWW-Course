@@ -10,5 +10,6 @@ html
         ul
             each meme in storage.getTop3()
                 li
-                   a(href="meme/" + meme.id) #{meme.name}
-                   img(src=meme.url)
+                    div(class='meme')
+                        a(href="meme/" + meme.id)(class='meme-title') #{meme.name}
+                        img(src=meme.url)
