@@ -1,7 +1,7 @@
 import express from 'express';
 import { Meme, MemesStorage } from './meme';
 
-const most_expensive = [
+const mostExpensive = [
     {
         'id': 10,
         'name': 'Gold',
@@ -25,33 +25,33 @@ const most_expensive = [
 const app = express();
 const storage = new MemesStorage();
 
-most_expensive.forEach(m => {
+mostExpensive.forEach(m => {
     storage.addMeme(new Meme(m.id, m.name, m.price, m.url));
 });
 
 app.set('view engine', 'pug');
 app.use(express.urlencoded({
     extended: true
-})); 
+}));
 
-app.get('/', function (req, res) {
-    res.render('index', { title: 'Meme market', message: 'Hello there!', storage: storage })
+app.get('/', (req, res) => {
+    res.render('index', { title: 'Meme market', message: 'Hello there!', storage })
 });
 
-app.get('/meme/:memeId(\\d+)', function (req, res, next) {
-    const meme = storage.getMeme(parseInt(req.params.memeId));
+app.get('/meme/:memeId(\\d+)', (req, res, next) => {
+    const meme = storage.getMeme(parseInt(req.params.memeId, 10));
     if(!meme)
         next();
-    res.render('meme', { title: 'Meme market', meme: meme });
+    res.render('meme', { title: 'Meme market', meme });
  });
 
- app.post('/meme/:memeId(\\d+)', function (req, res, next) {
-    const meme = storage.getMeme(parseInt(req.params.memeId));
+ app.post('/meme/:memeId(\\d+)', (req, res, next) => {
+    const meme = storage.getMeme(parseInt(req.params.memeId, 10));
     const price = req.body.price;
     if(!meme)
         next();
     meme.setPrice(price);
-    res.render('meme', { title: 'Meme market', meme: meme });
+    res.render('meme', { title: 'Meme market', meme });
  })
 
  app.use((req, res) => {

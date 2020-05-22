@@ -1,3 +1,22 @@
+body {
+    background-color: darkolivegreen;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.center {
+    text-align: center;
+    margin: auto;
+}
+
+.text-white {
+    color: white;
+}
+
 .meme {
     display: flex;
     flex-direction: column;
@@ -12,10 +31,36 @@
 
 .meme-title:link,
 .meme-title:visited {
-    color: green;
+    color: white;
 }
 
 .meme-title:hover,
 .meme-title:active {
-    color: chartreuse;
+    color: aquamarine;
+}
+
+#logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#list-header, #meme-header, #error-header {
+    background-color: white;
+    color: darkolivegreen;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid black;
+    text-align: center;
+}
+
+table {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

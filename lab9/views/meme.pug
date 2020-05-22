@@ -4,18 +4,21 @@ html
     style
         include style.css
     body
-        h1= meme.name
-        p Actual price: #{meme.price}
-        img(src=meme.url)
+        div(class='flex-column')
+            h1(id='meme-header')(class='center')= meme.name
+            p(class='text-white') Actual price: #{meme.price}
+            img(src=meme.url)
 
-        table
-            tr
-                th="Cena"
-            each price in meme.pricesHistory.reverse()
+            table(class='text-white')
                 tr
-                    td=price
+                    th="Historical prices"
+                each price in meme.pricesHistory.reverse()
+                    tr
+                        td=price
 
-        form(method="POST")
-            label(for="price")="Nowa cena:"
-            input(type="number" min="0" name="price")
-            button(type="submit")="Ustaw"
+            form(method="POST")
+                label(for="price")(class='text-white')="New price: "
+                input(type="number" min="0" name="price")
+                button(type="submit")="Buy"
+
+            a(href="/")(class='center text-white') Back to home
