@@ -16,6 +16,20 @@ describe('Meme test', () => {
 
         expect(meme.price).to.equal(newPrice);
     });
+
+    it('should add old price to history', () => {
+        const initPrice = 123;
+        const meme = new Meme(1, 'test', initPrice, 'url');
+
+        const newPrice = 321;
+        meme.setPrice(newPrice);
+
+        expect(meme.pricesHistory[meme.pricesHistory.length - 1]).to.equal(initPrice);
+
+        const newerPrice = 1000;
+        meme.setPrice(newerPrice);
+        expect(meme.pricesHistory[meme.pricesHistory.length - 1]).to.equal(newPrice);
+    })
 });
 
 function checkStoregeGet(storege: MemesStorage, id: number) {
