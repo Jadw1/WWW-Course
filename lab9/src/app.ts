@@ -1,5 +1,6 @@
 import express from 'express';
 import { Meme, MemesStorage } from './meme';
+import csurf from 'csurf';
 
 const mostExpensive = [
     {
@@ -24,6 +25,7 @@ const mostExpensive = [
 
 const app = express();
 const storage = new MemesStorage();
+const csrfProtection = csurf({cookie: true});
 
 mostExpensive.forEach(m => {
     storage.addMeme(new Meme(m.id, m.name, m.price, m.url));
@@ -38,14 +40,14 @@ app.get('/', (req, res) => {
     res.render('index', { title: 'Meme market', message: 'Hello there!', storage })
 });
 
-app.get('/meme/:memeId(\\d+)', (req, res, next) => {
+app.get('/meme/:memeId(\\d+)', csrfProtection, (req, res, next) => {
     const meme = storage.getMeme(parseInt(req.params.memeId, 10));
     if(!meme)
         next();
-    res.render('meme', { title: 'Meme market', meme });
+    res.render('meme', { title: 'Meme market', meme, csrfToken: req.csrfToken() });
  });
 
- app.post('/meme/:memeId(\\d+)', (req, res, next) => {
+ app.post('/meme/:memeId(\\d+)', csrfProtection, (req, res, next) => {
     const meme = storage.getMeme(parseInt(req.params.memeId, 10));
     const price = req.body.price;
     const parsedPrice = parseInt(price, 10);
@@ -54,7 +56,7 @@ app.get('/meme/:memeId(\\d+)', (req, res, next) => {
     if(!meme)
         next();
     meme.setPrice(price);
-    res.render('meme', { title: 'Meme market', meme });
+    res.render('meme', { title: 'Meme market', meme, csrfToken: req.csrfToken() });
  });
 
  app.use((req, res) => {
