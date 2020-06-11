@@ -48,6 +48,10 @@ app.get('/meme/:memeId(\\d+)', (req, res, next) => {
  app.post('/meme/:memeId(\\d+)', (req, res, next) => {
     const meme = storage.getMeme(parseInt(req.params.memeId, 10));
     const price = req.body.price;
+    const parsedPrice = parseInt(price, 10);
+    if(parsedPrice < 0) {
+        next();
+    }
     if(!meme)
         next();
     meme.setPrice(price);

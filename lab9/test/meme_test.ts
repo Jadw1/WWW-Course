@@ -68,3 +68,37 @@ describe('MemeStorage test', () => {
         expect(bests[2].id).to.equal(1);
     });
 });
+
+describe('MemeStorage with less then 3 elements', () => {
+
+    it('should return empty list', () => {
+        const storage = new MemesStorage();
+        const bests = storage.getTop3();
+
+        expect(bests.length).to.equal(0);
+    });
+
+    it('should return 1 meme', () => {
+        const storage = new MemesStorage();
+
+        storage.addMeme(new Meme(1, 'meme1', 1, 'url'));
+
+        const bests = storage.getTop3();
+
+        expect(bests.length).to.equal(1);
+        expect(bests[0].id).to.equal(1);
+    });
+
+    it('should return 2 memes in correct order', () => {
+        const storage = new MemesStorage();
+
+        storage.addMeme(new Meme(1, 'meme1', 1, 'url'));
+        storage.addMeme(new Meme(2, 'meme2', 1000, 'url'));
+
+        const bests = storage.getTop3();
+
+        expect(bests.length).to.equal(2);
+        expect(bests[0].id).to.equal(2);
+        expect(bests[1].id).to.equal(1);
+    });
+})

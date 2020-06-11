@@ -5,7 +5,7 @@ html
         include style.css
     body
         div(class='flex-column')
-            h1(id='meme-header')(class='center')= meme.name
+            h1(id='meme-header' class='center')= meme.name
             p(class='text-white') Actual price: #{meme.price}
             img(src=meme.url)
 
@@ -17,8 +17,8 @@ html
                         td=price
 
             form(method="POST")
-                label(for="price")(class='text-white')="New price: "
+                label(for="price" class='text-white')="New price: "
                 input(type="number" min="0" name="price")
                 button(type="submit")="Buy"
 
-            a(href="/")(class='center text-white') Back to home
+            a(href="/" class='center text-white') Back to home
