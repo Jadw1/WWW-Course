@@ -49,19 +49,18 @@ app.get('/meme/:memeId(\\d+)', (req, res, next) => {
     const meme = storage.getMeme(parseInt(req.params.memeId, 10));
     const price = req.body.price;
     const parsedPrice = parseInt(price, 10);
-    if(parsedPrice < 0) {
+    if(isNaN(parsedPrice) || parsedPrice < 0)
         next();
-    }
     if(!meme)
         next();
     meme.setPrice(price);
     res.render('meme', { title: 'Meme market', meme });
- })
+ });
 
  app.use((req, res) => {
      res.status(404);
      res.render('404');
- })
+ });
 
 const server = app.listen(1500, () => {
     console.log(`App is running at http://localhost:1500/ in ${app.get('env')} mode`);
