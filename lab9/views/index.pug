@@ -8,7 +8,7 @@ html
         img(src="https://lh3.googleusercontent.com/proxy/igRE4p0PKa50j_dxfgU-YVV2LEeB0v5XC6jB8Avf93LEpuQaQ39Q_T_P7xd_vfQqQppF7TFi9dacn-S0M0j7eQMAqcDAiAVh" id="logo")
         h1(class='center' id="list-header")="Meme list"
         div(class='flex-column')
-            each meme in storage.getTop3()
+            each meme in top3
                 div(class='meme center')
                     a(href="meme/" + meme.id class='meme-title center') #{meme.name}
                     img(src=meme.url)

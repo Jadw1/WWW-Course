@@ -1,62 +1,49 @@
 import express from 'express';
 import { Meme, MemesStorage } from './meme';
 import csurf from 'csurf';
-
-const mostExpensive = [
-    {
-        'id': 10,
-        'name': 'Gold',
-        'price': 1000,
-        'url': 'https://i.redd.it/h7rplf9jt8y21.png'
-    },
-    {
-        'id': 9,
-        'name': 'Platinum',
-        'price': 1100,
-        'url': 'http://www.quickmeme.com/img/90/90d3d6f6d527a64001b79f4e13bc61912842d4a5876d17c1f011ee519d69b469.jpg'
-    },
-    {
-        'id': 8,
-        'name': 'Elite',
-        'price': 1200,
-        'url': 'https://i.imgflip.com/30zz5g.jpg'
-    }
-];
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const storage = new MemesStorage();
 const csrfProtection = csurf({cookie: true});
 
-mostExpensive.forEach(m => {
-    storage.addMeme(new Meme(m.id, m.name, m.price, m.url));
-});
-
 app.set('view engine', 'pug');
 app.use(express.urlencoded({
     extended: true
 }));
+app.use(express.json());
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
-    res.render('index', { title: 'Meme market', message: 'Hello there!', storage })
+    storage.getTop3().then(top => {
+        res.render('index', { title: 'Meme market', message: 'Hello there!', top3: top });
+    });
 });
 
 app.get('/meme/:memeId(\\d+)', csrfProtection, (req, res, next) => {
-    const meme = storage.getMeme(parseInt(req.params.memeId, 10));
-    if(!meme)
-        next();
-    res.render('meme', { title: 'Meme market', meme, csrfToken: req.csrfToken() });
+    storage.getMeme(parseInt(req.params.memeId, 10)).then(meme => {
+        if(!meme)
+            next();
+
+        meme.getPricesHistory().then(history => {
+            res.render('meme', { title: 'Meme market', meme, history, csrfToken: req.csrfToken() });
+        });
+    });
  });
 
- app.post('/meme/:memeId(\\d+)', csrfProtection, (req, res, next) => {
-    const meme = storage.getMeme(parseInt(req.params.memeId, 10));
+ app.post('/meme/:memeId(\\d+)', csrfProtection, async (req, res, next) => {
+    const meme = await storage.getMeme(parseInt(req.params.memeId, 10));
     const price = req.body.price;
     const parsedPrice = parseInt(price, 10);
     if(isNaN(parsedPrice) || parsedPrice < 0)
         next();
     if(!meme)
         next();
-    meme.setPrice(price);
-    res.render('meme', { title: 'Meme market', meme, csrfToken: req.csrfToken() });
+    await meme.setPrice(price);
+
+    meme.getPricesHistory().then(history => {
+        res.render('meme', { title: 'Meme market', meme, history, csrfToken: req.csrfToken() });
+    });
  });
 
  app.use((req, res) => {

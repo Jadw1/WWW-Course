@@ -1,55 +1,53 @@
+import * as db from './database';
+
+function infoToMeme(info: db.MemeInfo): Meme {
+    const meme = new Meme(info.id, info.title, info.price, info.url);
+    return meme;
+}
+
 export class Meme {
     id: number;
     name: string;
     price: number;
     url: string;
-    pricesHistory: number[];
 
     constructor(id: number, name: string, price: number, url: string) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.url = url;
-        this.pricesHistory = [];
     }
 
-    setPrice(price: number) {
-        this.pricesHistory.push(this.price);
-        this.price = price;
+    setPrice(price: number): Promise<void> {
+        return db.addMemePrice(this.id, price).then(() => {
+            this.price = price;
+        });
+    }
+
+    getPricesHistory(): Promise<number[]> {
+        return db.getMemePriceHistory(this.id).then((history: number[]) => {
+            history.shift();
+            return history;
+        });
     }
 }
 
 export class MemesStorage {
-    memes: Meme[];
-
-    constructor() {
-        this.memes = [];
-    }
-
-    addMeme(meme: Meme) {
-        this.memes.push(meme);
-    }
-
-    addMemes(memes: Meme[]) {
-        this.memes = this.memes.concat(memes);
-    }
-
-    getTop3(): Meme[] {
-        const sorted = this.memes.sort((m1, m2) => {
-            return m1.price > m2.price ? -1 : 1;
+    addMeme(meme: Meme): Promise<void> {
+        return db.addMeme(meme).then(() => {
+            db.addMemePrice(meme.id, meme.price);
         });
-
-        return sorted.slice(0, 3);
     }
 
-    getMeme(id: number): Meme {
-        let result: Meme = null;
-        this.memes.forEach(meme => {
-            if(meme.id === id) {
-                result = meme;
-            }
+    getTop3(): Promise<Meme[]> {
+        return db.getBestN(3).then((memes: db.MemeInfo[]) => {
+            return memes.map(meme => infoToMeme(meme));
         });
+    }
 
-        return result;
+    getMeme(id: number): Promise<Meme> {
+        return db.getMeme(id).then((meme: db.MemeInfo) => {
+            return infoToMeme(meme);
+        });
     }
 }
