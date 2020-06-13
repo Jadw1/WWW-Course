@@ -166,6 +166,11 @@ export async function authUser(username: string, password: string): Promise<bool
                                     return;
                                 }
 
+                                if(result.length === 0) {
+                                    reject(Error('User not found.'));
+                                    return;
+                                }
+
                                 const user = result[0];
                                 bcrypt.compare(password, user.password_hash, (err: Error, res: boolean) => {
                                     if(err) {

@@ -2,17 +2,38 @@ import express from 'express';
 import { Meme, MemesStorage } from './meme';
 import csurf from 'csurf';
 import cookieParser from 'cookie-parser';
+import * as db from './database'
+import session from 'express-session'
+const connectSqlite = require('connect-sqlite3');
 
+const SqliteStore = connectSqlite(session);
 const app = express();
 const storage = new MemesStorage();
 const csrfProtection = csurf({cookie: true});
+const secret = 'tajny sekret';
 
+
+app.use(cookieParser(secret));
+app.use(session({
+    secret,
+    cookie: {maxAge: 15*60*1000},
+    resave: false,
+    saveUninitialized: true,
+    store: new SqliteStore()
+}));
 app.set('view engine', 'pug');
 app.use(express.urlencoded({
     extended: true
 }));
 app.use(express.json());
-app.use(cookieParser());
+
+app.use((req, res, next) => {
+    if(!req.session?.views) {
+        req.session.views = {};
+    }
+    req.session.views[req.path] = (req.session.views[req.path] || 0) + 1;
+    next();
+});
 
 app.get('/', (req, res) => {
     storage.getTop3().then(top => {
@@ -51,8 +72,21 @@ app.get('/meme/:memeId(\\d+)', csrfProtection, (req, res, next) => {
  });
  
  app.post('/login', csrfProtection, (req, res) => {
-    const username = req.body.login;
+    const username = req.body.username;
     const password = req.body.password;
+
+    db.authUser(username, password).then(correct => {
+        if(correct) {
+            res.redirect('/');
+        }
+        else {
+            res.render('login', { title: 'Meme market', errorMsg: 'invalid pass', csrfToken: req.csrfToken() });
+        }
+    }, err => {
+        res.render('login', { title: 'Meme market', errorMsg: err, csrfToken: req.csrfToken() });
+    }).catch(err => {
+        res.render('login', { title: 'Meme market', errorMsg: err, csrfToken: req.csrfToken() });
+    })
  });
 
  app.use((req, res) => {

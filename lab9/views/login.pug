@@ -9,8 +9,16 @@ html
 
             form(method="POST")
                 input(type="hidden" name="_csrf" value=csrfToken)
-                label(for="login" class='text-white' type="text" required)="Username: "
-                label(for="password" class='text-white' type="password" required)="Password: "
+
+                label(for="username" class='text-white')="Username: "
+                input(type="text" name="username" required)
+
+                label(for="password" class='text-white')="Password: "
+                input(type="password" name="password" required)
+
                 button(type="submit")="Login"
+
+            if errorMsg
+                h2=errorMsg
             
             a(href="/" class='center text-white') Back to home
