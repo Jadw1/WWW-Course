@@ -1,0 +1,16 @@
+html
+    head
+        title= title
+    style
+        include style.css
+    body
+        div(class='flex-column')
+            h1(class='center')=Login            
+
+            form(method="POST")
+                input(type="hidden" name="_csrf" value=csrfToken)
+                label(for="login" class='text-white' type="text" required)="Username: "
+                label(for="password" class='text-white' type="password" required)="Password: "
+                button(type="submit")="Login"
+            
+            a(href="/" class='center text-white') Back to home

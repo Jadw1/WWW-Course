@@ -46,6 +46,15 @@ app.get('/meme/:memeId(\\d+)', csrfProtection, (req, res, next) => {
     });
  });
 
+ app.get('/login', csrfProtection, (req, res) => {
+     res.render('login', { title: 'Meme market', csrfToken: req.csrfToken() });
+ });
+ 
+ app.post('/login', csrfProtection, (req, res) => {
+    const username = req.body.login;
+    const password = req.body.password;
+ });
+
  app.use((req, res) => {
      res.status(404);
      res.render('404');

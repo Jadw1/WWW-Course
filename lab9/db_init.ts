@@ -37,6 +37,17 @@ async function main() {
     mostExpensive.forEach(m => {
         storage.addMeme(new Meme(m.id, m.name, m.price, m.url));
     });
+
+    await db.addUser('user', 'user').then(() => {
+        console.log("User added.");
+    });
+
+    await db.addUser('admin', 'admin').then(() => {
+        console.log("User added.");
+    });
+
+    await db.authUser('test', 'wrong');
+    await db.authUser('admin', 'admin');
 }
 
 
