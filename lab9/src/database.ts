@@ -89,7 +89,7 @@ export function addMemePrice(memeID: number, price: number, who: string): Promis
     const sql = `
         BEGIN EXCLUSIVE;
         INSERT OR ROLLBACK INTO meme_price (meme_id, value, by_who)
-        VALUES (${escape(memeID.toString())}, ${escape(price.toString())}, "${escape(who)}");
+        VALUES (${memeID}, ${price}, "${who}");
         COMMIT;
     `;
     return doExecDB(dbConnection,sql);

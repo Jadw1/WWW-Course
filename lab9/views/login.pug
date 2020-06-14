@@ -4,21 +4,22 @@ html
     style
         include style.css
     body
-        div(class='flex-column')
-            h1(class='center')=Login            
+        h1(class='center text-white' id='list-header')="Login"
 
+        div(class='flex-column')
             form(method="POST")
                 input(type="hidden" name="_csrf" value=csrfToken)
 
-                label(for="username" class='text-white')="Username: "
-                input(type="text" name="username" required)
+                div(class='flex-column')
+                    label(for="username" class='center text-white')="Username: "
+                    input(type="text" name="username" required)
 
-                label(for="password" class='text-white')="Password: "
-                input(type="password" name="password" required)
+                    label(for="password" class='text-white')="Password: "
+                    input(type="password" name="password" required)
 
-                button(type="submit")="Login"
+                    button(type="submit" class='center')="Login"
 
             if errorMsg
-                h2=errorMsg
+                h2(class='center')=errorMsg
             
             a(href="/" class='center text-white') Back to home

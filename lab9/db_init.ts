@@ -23,6 +23,10 @@ const mostExpensive = [
     }
 ];
 
+function getRandomInt(max: number): number {
+    return Math.floor(Math.random() * Math.floor(max));
+}
+
 async function main() {
     await db.dropTables().then(() => {
         console.log("Dropping tables if exist.");
@@ -34,13 +38,22 @@ async function main() {
     const storage = new MemesStorage();
 
     mostExpensive.forEach(async (m) =>  {
-        await storage.addMeme(new Meme(m.id, m.name, m.price, m.url));
+        console.log("Adding meme.");
+        const meme = new Meme(m.id, m.name, m.price, m.url);
+        await storage.addMeme(meme);
+
+        console.log("Adding meme's price.");
+        const addAmount = getRandomInt(10);
+        for(let i = 0; i < addAmount; i++) {
+            const user = (getRandomInt(1) === 1) ? "admin" : "user";
+            const price = getRandomInt(5000) + 1000
+            await meme.setPrice(price, user);
+        }
     });
-    console.log("lol1");
+
     await db.addUser('user', 'user').then(() => {
         console.log("User added.");
     });
-    console.log("lol2");
     await db.addUser('admin', 'admin').then(() => {
         console.log("User added.");
     });

@@ -7,7 +7,8 @@
     "test": "npx mocha -r ts-node/register test/*.ts",
     "run": "node dist/app.js",
     "compile": "tsc",
-    "createdb": "ts-node db_init.ts"
+    "createdb": "ts-node db_init.ts",
+    "lint": "tslint src/*.ts db_init.ts"
   },
   "keywords": [],
   "author": "",

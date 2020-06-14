@@ -4,7 +4,10 @@ html
     style
         include style.css
     body
-        h1(class='center text-white')= message
+        if username
+            h1(class='center text-white') Hello #{username}!
+        else
+            h1(class='center text-white')="Hello there!"
         img(src="https://www.mimuw.edu.pl/sites/all/themes/mimuwtheme/images/MIM_logo_sygnet_pl.png" id="logo")
         
         if username

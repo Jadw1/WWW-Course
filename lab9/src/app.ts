@@ -4,6 +4,7 @@ import csurf from 'csurf';
 import cookieParser from 'cookie-parser';
 import * as db from './database'
 import session from 'express-session'
+
 const connectSqlite = require('connect-sqlite3');
 
 const SqliteStore = connectSqlite(session);
@@ -37,8 +38,7 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
     storage.getTop3().then(top => {
-        console.log(req.session.username);
-        res.render('index', { title: 'Meme market', message: 'Hello there!', top3: top, username: req.session.username });
+        res.render('index', { title: 'Meme market', top3: top, username: req.session.username });
     });
 });
 
