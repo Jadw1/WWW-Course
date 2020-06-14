@@ -5,7 +5,15 @@ html
         include style.css
     body
         h1(class='center text-white')= message
-        img(src="https://lh3.googleusercontent.com/proxy/igRE4p0PKa50j_dxfgU-YVV2LEeB0v5XC6jB8Avf93LEpuQaQ39Q_T_P7xd_vfQqQppF7TFi9dacn-S0M0j7eQMAqcDAiAVh" id="logo")
+        img(src="https://www.mimuw.edu.pl/sites/all/themes/mimuwtheme/images/MIM_logo_sygnet_pl.png" id="logo")
+        
+        if username
+            a(href="/logout")
+                h2(class='center text-white')="Logout"
+        else
+            a(href="/login")
+                h2(class='center text-white')="Login"
+
         h1(class='center' id="list-header")="Meme list"
         div(class='flex-column')
             each meme in top3

@@ -12,14 +12,16 @@ html
             table(class='text-white')
                 tr
                     th="Historical prices"
+                    th="By"
                 each price in history
                     tr
-                        td=price
-
-            form(method="POST")
-                input(type="hidden" name="_csrf" value=csrfToken)
-                label(for="price" class='text-white')="New price: "
-                input(type="number" min="0" name="price")
-                button(type="submit")="Buy"
+                        td=price.price
+                        td=price.by_who
+            if username
+                form(method="POST")
+                    input(type="hidden" name="_csrf" value=csrfToken)
+                    label(for="price" class='text-white')="New price: "
+                    input(type="number" min="0" name="price")
+                    button(type="submit")="Buy"
 
             a(href="/" class='center text-white') Back to home

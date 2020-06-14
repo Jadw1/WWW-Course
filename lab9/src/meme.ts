@@ -18,14 +18,14 @@ export class Meme {
         this.url = url;
     }
 
-    setPrice(price: number): Promise<void> {
-        return db.addMemePrice(this.id, price).then(() => {
+    setPrice(price: number, user: string): Promise<void> {
+        return db.addMemePrice(this.id, price, user).then(() => {
             this.price = price;
         });
     }
 
-    getPricesHistory(): Promise<number[]> {
-        return db.getMemePriceHistory(this.id).then((history: number[]) => {
+    getPricesHistory(): Promise<db.PriceHistory[]> {
+        return db.getMemePriceHistory(this.id).then((history: db.PriceHistory[]) => {
             history.shift();
             return history;
         });
@@ -35,7 +35,7 @@ export class Meme {
 export class MemesStorage {
     addMeme(meme: Meme): Promise<void> {
         return db.addMeme(meme).then(() => {
-            db.addMemePrice(meme.id, meme.price);
+            db.addMemePrice(meme.id, meme.price, "Initial price");
         });
     }
 

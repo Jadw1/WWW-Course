@@ -37,7 +37,8 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
     storage.getTop3().then(top => {
-        res.render('index', { title: 'Meme market', message: 'Hello there!', top3: top });
+        console.log(req.session.username);
+        res.render('index', { title: 'Meme market', message: 'Hello there!', top3: top, username: req.session.username });
     });
 });
 
@@ -47,7 +48,7 @@ app.get('/meme/:memeId(\\d+)', csrfProtection, (req, res, next) => {
             next();
 
         meme.getPricesHistory().then(history => {
-            res.render('meme', { title: 'Meme market', meme, history, csrfToken: req.csrfToken() });
+            res.render('meme', { title: 'Meme market', meme, history, username: req.session.username, csrfToken: req.csrfToken() });
         });
     });
  });
@@ -56,28 +57,38 @@ app.get('/meme/:memeId(\\d+)', csrfProtection, (req, res, next) => {
     const meme = await storage.getMeme(parseInt(req.params.memeId, 10));
     const price = req.body.price;
     const parsedPrice = parseInt(price, 10);
-    if(isNaN(parsedPrice) || parsedPrice < 0)
+    const user = req.session.username;
+
+    if(isNaN(parsedPrice) || parsedPrice < 0 || user === undefined)
         next();
     if(!meme)
         next();
-    await meme.setPrice(price);
+    await meme.setPrice(price, user);
 
     meme.getPricesHistory().then(history => {
-        res.render('meme', { title: 'Meme market', meme, history, csrfToken: req.csrfToken() });
+        res.render('meme', { title: 'Meme market', meme, history, username: req.session.username, csrfToken: req.csrfToken() });
     });
  });
 
  app.get('/login', csrfProtection, (req, res) => {
      res.render('login', { title: 'Meme market', csrfToken: req.csrfToken() });
  });
- 
+
  app.post('/login', csrfProtection, (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
     db.authUser(username, password).then(correct => {
         if(correct) {
-            res.redirect('/');
+            req.session.regenerate(err => {
+                if(err) {
+                    res.render('login', { title: 'Meme market', errorMsg: err, csrfToken: req.csrfToken() });
+                    return;
+                }
+
+                req.session.username = username;
+                res.redirect('/');
+            });
         }
         else {
             res.render('login', { title: 'Meme market', errorMsg: 'invalid pass', csrfToken: req.csrfToken() });
@@ -87,6 +98,15 @@ app.get('/meme/:memeId(\\d+)', csrfProtection, (req, res, next) => {
     }).catch(err => {
         res.render('login', { title: 'Meme market', errorMsg: err, csrfToken: req.csrfToken() });
     })
+ });
+
+ app.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if(err) {
+            console.error(err);
+        }
+        res.redirect('/');
+    });
  });
 
  app.use((req, res) => {

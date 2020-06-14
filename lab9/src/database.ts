@@ -3,7 +3,7 @@ import * as db from 'sqlite3';
 import { exit } from "process";
 import * as bcrypt from 'bcrypt';
 
-export const database_file = 'database.sqlite';
+export const databaseFile = 'database.sqlite';
 
 export interface MemeInfo {
     id: number;
@@ -17,20 +17,23 @@ export interface User {
     password_hash: string;
 }
 
-const db_connection = new db.Database(database_file, (error: Error) => {
+export interface PriceHistory{
+    price: number;
+    by_who: string;
+}
+
+const dbConnection = new db.Database(databaseFile, (error: Error) => {
     if(error) {
         console.error('Connection to databas not established.');
         exit(1);
     }
 });
 
-export function addMeme(meme: Meme): Promise<void> {
+async function doRunDB(database: db.Database, sql: string, args?: any[]): Promise<void> {
     return new Promise((resolve, reject) => {
-        db_connection.run(` insert into meme (id, title, url)
-                            values (${meme.id}, "${meme.name}", "${meme.url}");`,
-        (error: Error) => {
-            if(error) {
-                reject(error);
+        database.run(sql, args, (err: Error) => {
+            if(err) {
+                reject(err);
                 return;
             }
             resolve();
@@ -38,95 +41,154 @@ export function addMeme(meme: Meme): Promise<void> {
     });
 }
 
-export function addMemePrice(memeID: number, price: number): Promise<void> {
+async function doAllDB(database: db.Database, sql: string, args?: any[]): Promise<any[]> {
     return new Promise((resolve, reject) => {
-        db_connection.run(` insert into meme_price (meme_id, value, time_stamp)
-                            values (${memeID}, ${price}, ${Date.now()});`,
-        (error: Error) => {
-            if(error) {
-                reject(error);
+        database.all(sql, args, (err: Error, data: any[]) => {
+            if(err) {
+                reject(err);
+                return;
+            }
+            resolve(data);
+        });
+    });
+}
+
+async function doGetDB(database: db.Database, sql: string, args?: any[]): Promise<any> {
+    return new Promise((resolve, reject) => {
+        database.get(sql, args, (err: Error, data: any) => {
+            if(err) {
+                reject(err);
+                return;
+            }
+            resolve(data);
+        });
+    });
+}
+
+async function doExecDB(database: db.Database, sql: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+        database.exec(sql, (err: Error) => {
+            if(err) {
+                reject(err);
                 return;
             }
             resolve();
         });
     });
+}
+
+export function addMeme(meme: Meme): Promise<void> {
+    const sql = `
+        INSERT INTO meme (id, title, url)
+        VALUES (?, ?, ?);
+    `;
+    return doRunDB(dbConnection, sql, [meme.id, meme.name, meme.url]);
+}
+
+export function addMemePrice(memeID: number, price: number, who: string): Promise<void> {
+    const sql = `
+        BEGIN EXCLUSIVE;
+        INSERT OR ROLLBACK INTO meme_price (meme_id, value, by_who)
+        VALUES (${escape(memeID.toString())}, ${escape(price.toString())}, "${escape(who)}");
+        COMMIT;
+    `;
+    return doExecDB(dbConnection,sql);
 }
 
 export function getAllMemes(): Promise<MemeInfo[]> {
-    return new Promise((resolve, reject) => {
-        db_connection.all(` select id, title, url, value as price from meme
-                            left join (
-                            select meme_id, value, max(time_stamp)
-                            from meme_price
-                            group by meme_id)
-                            on id = meme_id;`,
-            (error: Error, data: MemeInfo[]) => {
-                if(error) {
-                    reject(error);
-                    return;
-                }
-                resolve(data);
-            });
-    });
+    const sql = `
+        SELECT id, title, url, value as price
+        FROM meme
+        LEFT JOIN (
+            SELECT meme_id, value, max(id)
+            FROM meme_price
+            GROUP BY meme_id
+        )
+        ON id = meme_id;
+    `;
+    return doAllDB(dbConnection, sql);
 }
 
 export function getBestN(n: number = 3): Promise<MemeInfo[]> {
-    return new Promise((resolve, reject) => {
-        db_connection.all(` select id, title, url, value as price from meme
-                            left join (
-                            select meme_id, value, max(time_stamp)
-                            from meme_price
-                            group by meme_id)
-                            on id = meme_id
-                            order by price desc
-                            limit ${n};`,
-            (error: Error, data: MemeInfo[]) => {
-                if(error) {
-                    reject(error);
-                    return;
-                }
-                resolve(data);
-            });
-    });
+    const sql = `
+        SELECT id, title, url, value as price
+        FROM meme
+        LEFT JOIN (
+            SELECT meme_id, value, max(id)
+            FROM meme_price
+            GROUP BY meme_id
+        )
+        ON id = meme_id
+        ORDER BY price DESC
+        LIMIT ?;
+    `;
+    return doAllDB(dbConnection, sql, [n]);
 }
 
-export function getMemePriceHistory(memeID: number): Promise<number[]> {
-    return new Promise((resolve, reject) => {
-        db_connection.all(` select value as price
-                            from meme_price
-                            where meme_id = ${memeID}
-                            order by time_stamp desc;`,
-            (error: Error, data) => {
-                if(error) {
-                    reject(error);
-                    return;
-                }
-                resolve(data.map(p => p.price));
-            });
-    });
+export function getMemePriceHistory(memeID: number): Promise<PriceHistory[]> {
+    const sql = `
+        SELECT value AS price, by_who
+        FROM meme_price
+        WHERE meme_id = ?
+        ORDER BY id DESC;
+    `;
+    return doAllDB(dbConnection, sql, [memeID]);
 }
 
 export function getMeme(memeID: number): Promise<MemeInfo> {
-    return new Promise((resolve, reject) => {
-        db_connection.all(` select id, title, url, value as price from meme
-                            left join (
-                            select meme_id, value, max(time_stamp)
-                            from meme_price
-                            group by meme_id)
-                            on id = meme_id
-                            where id = ${memeID};`,
-            (error: Error, data) => {
-                if(error) {
-                    reject(error);
-                    return;
-                }
-                resolve(data[0]);
-            });
-    });
+    const sql = `
+        SELECT id, title, url, value as price
+        FROM meme
+        LEFT JOIN (
+            SELECT meme_id, value, max(id)
+            FROM meme_price
+            GROUP BY meme_id
+        )
+        ON id = meme_id
+        WHERE id = ?;
+    `;
+    return doGetDB(dbConnection, sql, [memeID]);
+}
+
+export async function dropTables(): Promise<void> {
+    const sql = `
+        DROP TABLE IF EXISTS meme_price;
+        DROP TABLE IF EXISTS meme;
+        DROP TABLE IF EXISTS user;
+    `;
+    return doExecDB(dbConnection, sql);
+}
+
+export async function createTables(): Promise<void> {
+    const sql = `
+        CREATE TABLE meme (
+            id	        INTEGER NOT NULL,
+            title	    TEXT NOT NULL,
+            url	        TEXT NOT NULL,
+            PRIMARY KEY(id)
+        );
+        CREATE TABLE meme_price (
+            id	        INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            meme_id	    INTEGER NOT NULL,
+            value	    INTEGER NOT NULL,
+            by_who      TEXT NOT NULL,
+            FOREIGN KEY(meme_id) REFERENCES meme(id)
+        );
+        CREATE TABLE user (
+            username    TEXT PRIMARY KEY,
+            pass_hash   TEXT NOT NULL
+        );
+    `;
+    return doExecDB(dbConnection, sql);
 }
 
 const saltRounds = 10;
 export async function addUser(username: string, password: string): Promise<void> {
+    const sql = `
+        INSERT INTO user (username, pass_hash)
+        VALUES (?, ?);
+    `;
+
     return new Promise((resolve, reject) => {
         bcrypt.genSalt(saltRounds, (err: Error, salt: string) => {
             if(err) {
@@ -140,10 +202,7 @@ export async function addUser(username: string, password: string): Promise<void>
                     return;
                 }
 
-                db_connection.run(`
-                INSERT INTO user (username, pass_hash)
-                VALUES (?, ?);`,
-                [username, hash], (error: Error) => {
+                dbConnection.run(sql, [username, hash], (error: Error) => {
                     if(error) {
                         reject(error);
                         return;
@@ -156,80 +215,32 @@ export async function addUser(username: string, password: string): Promise<void>
 }
 
 export async function authUser(username: string, password: string): Promise<boolean> {
+    const sql = `
+        SELECT username AS name, pass_hash AS password_hash
+        FROM user
+        WHERE name = ?
+    `;
+
     return new Promise((resolve, reject) => {
-        db_connection.all(` select username as name, pass_hash as password_hash
-                            from user
-                            where name = ?`,
-                            [username], (error: Error, result: User[]) => {
-                                if(error) {
-                                    reject(error);
-                                    return;
-                                }
-
-                                if(result.length === 0) {
-                                    reject(Error('User not found.'));
-                                    return;
-                                }
-
-                                const user = result[0];
-                                bcrypt.compare(password, user.password_hash, (err: Error, res: boolean) => {
-                                    if(err) {
-                                        reject(err);
-                                        return;
-                                    }
-
-                                    resolve(res);
-                                });
-                            });
-    });
-}
-
-export async function dropTables() {
-    const command = new Promise((resolve, reject) => {
-        db_connection.exec(`
-        DROP TABLE IF EXISTS meme_price;
-        DROP TABLE IF EXISTS meme;
-        DROP TABLE IF EXISTS user`,
-            (error: Error) => {
-                if(error) {
-                    reject(error);
-                    return;
-                }
-                resolve();
-            });
-    });
-
-    await command;
-}
-
-export async function createTables() {
-    const command = new Promise((resolve, reject) => {
-        db_connection.exec(`
-        CREATE TABLE meme (
-            id	        INTEGER NOT NULL,
-            title	    TEXT NOT NULL,
-            url	        TEXT NOT NULL,
-            PRIMARY KEY(id)
-        );
-        CREATE TABLE meme_price (
-            id	        INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            meme_id	    INTEGER NOT NULL,
-            value	    INTEGER NOT NULL,
-            time_stamp	INTEGER NOT NULL,
-            FOREIGN KEY(meme_id) REFERENCES meme(id)
-        );
-        CREATE TABLE user (
-            username    TEXT PRIMARY KEY,
-            pass_hash   TEXT NOT NULL
-        );`,
-        (error: Error) => {
+        dbConnection.get(sql, [username], (error: Error, user: User) => {
             if(error) {
                 reject(error);
                 return;
             }
-            resolve();
+
+            if(user === undefined) {
+                reject(Error('User not found.'));
+                return;
+            }
+
+            bcrypt.compare(password, user.password_hash, (err: Error, res: boolean) => {
+                if(err) {
+                    reject(err);
+                    return;
+                }
+
+                resolve(res);
+            });
         });
     });
-
-    await command;
 }

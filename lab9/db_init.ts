@@ -27,27 +27,23 @@ async function main() {
     await db.dropTables().then(() => {
         console.log("Dropping tables if exist.");
     });
-    console.log("lool ;-;");
     await db.createTables().then(() => {
         console.log("Creating tables.");
     });
 
     const storage = new MemesStorage();
 
-    mostExpensive.forEach(m => {
-        storage.addMeme(new Meme(m.id, m.name, m.price, m.url));
+    mostExpensive.forEach(async (m) =>  {
+        await storage.addMeme(new Meme(m.id, m.name, m.price, m.url));
     });
-
+    console.log("lol1");
     await db.addUser('user', 'user').then(() => {
         console.log("User added.");
     });
-
+    console.log("lol2");
     await db.addUser('admin', 'admin').then(() => {
         console.log("User added.");
     });
-
-    await db.authUser('test', 'wrong');
-    await db.authUser('admin', 'admin');
 }
 
 
